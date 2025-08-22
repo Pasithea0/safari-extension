@@ -1,49 +1,48 @@
-import { relayMessage } from '@plasmohq/messaging'
-import type { PlasmoCSConfig } from 'plasmo'
+import { relayMessage } from '@plasmohq/messaging';
+import type { PlasmoCSConfig } from 'plasmo';
 
 export const config: PlasmoCSConfig = {
-  matches: ['<all_urls>']
-}
+  matches: ['<all_urls>'],
+};
 
 // Safari requires a delay before setting up messaging
 const isSafari = () => {
   try {
     return (
       chrome.runtime.getURL('').startsWith('safari-web-extension://') ||
-      (typeof browser !== 'undefined' &&
-        browser.runtime.getURL('').startsWith('safari-web-extension://'))
-    )
+      (typeof browser !== 'undefined' && browser.runtime.getURL('').startsWith('safari-web-extension://'))
+    );
   } catch {
-    return false
+    return false;
   }
-}
+};
 
 const setupMessaging = () => {
   try {
     relayMessage({
-      name: 'hello'
-    })
+      name: 'hello',
+    });
 
     relayMessage({
-      name: 'makeRequest'
-    })
+      name: 'makeRequest',
+    });
 
     relayMessage({
-      name: 'prepareStream'
-    })
+      name: 'prepareStream',
+    });
 
     relayMessage({
-      name: 'openPage'
-    })
+      name: 'openPage',
+    });
   } catch (error) {
-    console.log('Failed to setup messaging, retrying...', error)
-    setTimeout(setupMessaging, 1000)
+    console.log('Failed to setup messaging, retrying...', error);
+    setTimeout(setupMessaging, 1000);
   }
-}
+};
 
 // Safari needs a delay to ensure background script is ready
 if (isSafari()) {
-  setTimeout(setupMessaging, 500)
+  setTimeout(setupMessaging, 500);
 } else {
-  setupMessaging()
+  setupMessaging();
 }

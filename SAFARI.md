@@ -38,16 +38,21 @@ Safari requires manual permission setup:
 ### 3. Common Safari Issues & Fixes
 
 #### Issue: "Invalid call to runtime.connect()"
+
 **Fix**: This occurs when the background script isn't ready. The extension now includes:
+
 - Delayed messaging setup for Safari
 - Retry logic for failed connections
 - Better error handling
 
 #### Issue: WebSocket Connection Blocked
+
 **Fix**: Use `pnpm dev:safari` which disables hot-reload WebSockets that Safari blocks.
 
 #### Issue: Permissions Not Working
-**Fix**: 
+
+**Fix**:
+
 - Ensure both `host_permissions` and `optional_host_permissions` are in manifest
 - Guide users through Safari's manual permission setup
 - Check permissions through Safari Preferences, not runtime API
@@ -71,6 +76,7 @@ Safari requires manual permission setup:
 ### 6. Production Deployment
 
 For Safari App Store distribution:
+
 1. You'll need to create a native macOS app wrapper
 2. Use Xcode to create the Safari extension project
 3. Follow Apple's Safari extension guidelines
